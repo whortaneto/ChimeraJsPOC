@@ -8,6 +8,7 @@ Which means web applications that runs entirely in the browser.
 How To Install the development environment?
 -------------------------------------------
 To run this code locally you just will need a simple server that provides static files.
+You can use python -m SimpleHTTPServer 8000 or the node example available in the "Simple Server" folder.
 
 Obs: If you decided to not use the Simple Server example you do not need to follow the others steps
 
