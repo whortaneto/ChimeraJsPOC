@@ -1,4 +1,3 @@
-//Here you say to Chimera which javascript will run in the main thread and which will run in a web worker.
 {
     "model" : [],
     "views" : ["../application/front.js", "../application/front2.js"],
