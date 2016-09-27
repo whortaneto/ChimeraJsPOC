@@ -23,3 +23,5 @@ Obs: If you decided to not use the Publisher server example you do not need to f
 5. Run "node app.js" in your prompt and your code will be available in the link "http://localhost:7000/"
 
 The test application just jave a animated gif and buttons that executes methods in the back-end, you can se the impact of a long loop in the main thread and how that behave in the back-end files.
+
+Also, you can access the published version of the test application in http://wneto.bitbucket.org/
