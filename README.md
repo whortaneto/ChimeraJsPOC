@@ -12,7 +12,7 @@ To run this code locally you just will need a simple server that provides the st
 
 You can use python -m SimpleHTTPServer 8000 or just use the example available in the "Publisher" folder.
 
-This folder just have a simple node server that provides the static files to the browser.
+This folder just have a simple node server that provides the static files to the browser, the library was located in ./Publisher/TestEnviroment/chimera.
 
 Obs: If you decided to not use the Publisher server example you do not need to follow the others steps.
 
