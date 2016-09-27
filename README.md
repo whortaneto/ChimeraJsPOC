@@ -7,14 +7,14 @@ Which means web applications that runs entirely in the browser.
 
 How To Install the development environment?
 -------------------------------------------
-To run this code locally you have to follow the the steps below.
+To run this code locally you just will need a simple server that provides static files.
 
 Obs: If you decided to not use the Simple Server example you do not need to follow the others steps
 
 1. Fist of all you need a simple server that just provides the files to your local client.
 	You can find a example of that in the Downloads tab called "Simple Server".
 
-2. Clone the repository into the folder "wneto.bitbucket.org"
+2. Clone the repository into the folder "ChimeraJs"
 
 3. Install node.
 
