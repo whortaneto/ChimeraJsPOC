@@ -2,7 +2,7 @@ let express = require('express'),
     app = express(),
     fs = require('fs');
 
-app.use(express.static(__dirname + '/ChimeraJs'));
+app.use(express.static(__dirname + '/TestEnvironment'));
 
 app.get('/', (req, res) => {
     res.sendFile('index.html');
