@@ -1,68 +1,68 @@
 /*
-    Module responsible for managing the controllers running in a web worker.
-*/
-const Meruem = () => {
-    const _setController = (controllers, controllerName) => {
-        if(controllers.indexOf(controllerName) > -1) {
-            return _createControllerObject(controllerName);
-        } else {
-            throw('Invalid controller');
-        }
-    }
-
-    const _methodBuilder = (controller, worker) => {
-        let controllerWithMethods = {};
-
-        for (method in controller) {
-            let methodRefence = method;
-
-            controllerWithMethods[methodRefence] = function () {
-                return new Promise(
-                    (resolve, reject) => {
-                        let functionCall = {
-                            methodName: methodRefence,
-                            arguments: [].slice.call(arguments)
-                        }
-                        worker.postMessage(JSON.stringify(functionCall));
-                        worker.onmessage = e => {
-                            let functionReturn = JSON.parse(e.data);
-                            if(functionReturn.hasOwnProperty('result')) {
-                                resolve(functionReturn.result);
-                            }
-                        }
-                    }
-                )
-            }
-        }
-
-        return controllerWithMethods;
-    }
-
-    const _createControllerObject = controllerName => {
-        return new Promise(
-            (resolve, reject) => {
-                let worker = new Worker('./chimera/neferpitou.js');
-                worker.postMessage(controllerName);
-
-                 worker.onmessage = e => {
-                    let controller = JSON.parse(e.data);
-                    resolve(_methodBuilder(controller, worker));
-                }
-            }
-        );
-    }
-
-
-    return {
-        setController: _setController
-    }
-}
-
-/*
     Encapsulate all modules and expose properties and methods to app.
 */
 let Chimera;
 window.onload = () => {
+    /*
+        Module responsible for managing the controllers running in a web worker.
+    */
+    const Meruem = () => {
+        const _setController = (controllers, controllerName) => {
+            if(controllers.indexOf(controllerName) > -1) {
+                return _createControllerObject(controllerName);
+            } else {
+                throw('Invalid controller');
+            }
+        }
+
+        const _methodBuilder = (controller, worker) => {
+            let controllerWithMethods = {};
+
+            for (method in controller) {
+                let methodRefence = method;
+
+                controllerWithMethods[methodRefence] = function () {
+                    return new Promise(
+                        (resolve, reject) => {
+                            let functionCall = {
+                                methodName: methodRefence,
+                                arguments: [].slice.call(arguments)
+                            }
+                            worker.postMessage(JSON.stringify(functionCall));
+                            worker.onmessage = e => {
+                                let functionReturn = JSON.parse(e.data);
+                                if(functionReturn.hasOwnProperty('result')) {
+                                    resolve(functionReturn.result);
+                                }
+                            }
+                        }
+                    )
+                }
+            }
+
+            return controllerWithMethods;
+        }
+
+        const _createControllerObject = controllerName => {
+            return new Promise(
+                (resolve, reject) => {
+                    let worker = new Worker('./chimera/neferpitou.js');
+                    worker.postMessage(controllerName);
+
+                     worker.onmessage = e => {
+                        let controller = JSON.parse(e.data);
+                        resolve(_methodBuilder(controller, worker));
+                    }
+                }
+            );
+        }
+
+
+        return {
+            setController: _setController
+        }
+    }
+    
     Chimera = (() => {
         const ctrlManager = Meruem();
         let manifest = {};
