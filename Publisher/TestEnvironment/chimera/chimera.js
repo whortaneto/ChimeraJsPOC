@@ -15,6 +15,58 @@ window.onload = () => {
             }
         }
 
+        const _setBooleanProp = (element, name, value) => {
+          if (value) {
+            element.setAttribute(name, value);
+            element[name] = true;
+          } else {
+            element[name] = false;
+          }
+        }
+
+        const _isCustomProp = (name) => {
+          return false;
+        }
+
+        const _setProp = (element, name, value) => {
+          element.setAttribute(name, value);
+
+            if (_isCustomProp(name)) {
+                return;
+            } else if (name === 'className') {
+                element.setAttribute('class', value);
+            } else if (typeof value === 'boolean') {
+                _setBooleanProp(element, name, value);
+            } else {
+                element.setAttribute(name, value);
+            }
+        }
+
+        const _setProps = (element, props) => {
+            Object.keys(props).forEach(name => {
+                _setProp(element, name, props[name]);
+            });
+        }
+
+        const _createDomElement = node => {
+            if (typeof node === 'string') {
+                return document.createTextNode(node);
+            }
+
+            let element = document.getElementById(node.props.id);
+
+            if(!element) {
+                element = document.createElement(node.type);
+            }
+            
+            _setProps(element, node.props);
+            node.children
+                .map(_createDomElement)
+                .forEach(element.appendChild.bind(element));
+
+            return element;
+        }
+
         const _methodBuilder = (controller, worker) => {
             let controllerWithMethods = {};
 
@@ -32,7 +84,11 @@ window.onload = () => {
                             worker.onmessage = e => {
                                 let functionReturn = JSON.parse(e.data);
                                 if(functionReturn.hasOwnProperty('result')) {
-                                    resolve(functionReturn.result);
+                                    if(!!functionReturn.result.chimeraVirtualElement) {
+                                        resolve(_createDomElement(functionReturn.result));
+                                    } else {
+                                        resolve(functionReturn.result);
+                                    }
                                 }
                             }
                         }
@@ -62,9 +118,49 @@ window.onload = () => {
             setController: _setController
         }
     }
-    
+
+    /*
+        Module responsible for Virtual Dom
+    */
+    const Pouf = () => {
+
+        const _createVirtualElement = domObject => {
+            const domElement = typeof domObject == "string" ?
+                document.getElementById(domObject) : 
+                domObject;
+
+            let virtualElement = {
+                type: domElement.tagName,
+                props: {},
+                children : [],
+                chimeraVirtualElement: true
+            }
+
+            let len = domElement.attributes.length;
+            for (let i = 0; i < len; i++) {
+                virtualElement.props[domElement.attributes[i].nodeName] =
+                    domElement.attributes[i].nodeValue;
+            }
+
+            len = domElement.children.length;
+            for (let i = 0; i < len; i++) {
+                virtualElement.children.push(
+                    _createVirtualElement(domElement.children[i])
+                );
+            }
+
+            return virtualElement
+        }
+
+        return {
+            createVirtualElement : _createVirtualElement
+        }
+    }
+
     Chimera = (() => {
+
         const ctrlManager = Meruem();
+        const virtualDom = Pouf();
         let manifest = {};
 
         (function loadManifest(callback) {
@@ -82,16 +178,13 @@ window.onload = () => {
         });
 
         const _loadFiles = (function() {
-                // Function which returns a function: https://davidwalsh.name/javascript-functions
             function _load(tag) {
                 return function(url) {
-                    // This promise will be used by Promise.all to determine success or failure
                     return new Promise(function(resolve, reject) {
                         let element = document.createElement(tag);
                         let parent = 'body';
                         let attr = 'src';
 
-                        // Important success and error for the promise
                         element.onload = function() {
                             resolve(url);
                         };
@@ -99,7 +192,6 @@ window.onload = () => {
                             reject(url);
                         };
 
-                        // Need to set different attributes depending on tag type
                         switch(tag) {
                         case 'script':
                             element.async = true;
@@ -138,7 +230,8 @@ window.onload = () => {
         }
 
         return {
-            setController: _setController
+            setController: _setController,
+            element: virtualDom.createVirtualElement
         }
     })();
 }
