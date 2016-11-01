@@ -54,15 +54,24 @@ window.onload = () => {
             }
 
             let element = document.getElementById(node.props.id);
+            let parent;
 
             if(!element) {
                 element = document.createElement(node.type);
+            } else {
+                parent = element.parentNode;
+                element.remove();
             }
             
             _setProps(element, node.props);
+
             node.children
                 .map(_createDomElement)
                 .forEach(element.appendChild.bind(element));
+
+            if(!!parent) {
+                parent.appendChild(element);    
+            }
 
             return element;
         }
@@ -128,7 +137,7 @@ window.onload = () => {
             const domElement = typeof domObject == "string" ?
                 document.getElementById(domObject) : 
                 domObject;
-
+            
             let virtualElement = {
                 type: domElement.tagName,
                 props: {},

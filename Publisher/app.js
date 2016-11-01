@@ -1,4 +1,4 @@
-let express = require('express'),
+var express = require('express'),
     app = express(),
     fs = require('fs');
 
