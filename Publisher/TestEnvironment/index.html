@@ -1,27 +1,22 @@
 <html>
     <head>
-        <script>
-            console.log('INLINE JS');
-        </script>
-        <script src="../chimera/chimera.js"></script>
+        <!-- <script src="../chimera/chimera.js"></script> -->
     </head>
 
     <body>
-        Client Side App to test Chimera Js
+        Aplicação web para testar a biblioteca ChimeraJS
         <p/>
         <img src='goku.gif'/></p>
-        <p>Put your test string here and send it to a back-end</p>
-        <input type="text" id="text"></input></p>
+        <p>Número que deseja calcular fibonacci</p>
+        <input type="number" id="fibonacciValue" min="1" max="45" style="width: 100;"/>
         <p id=result></p>
-        <button id="methodBack1"> methodBack1</button>
-        <button id="functionBack1"> functionBack1</button>
-        <button id="methodBack2"> methodBack2</button>
-        <button id="functionBack2"> functionBack2</button>
+        <button id="fibonacciMainThread"> Calcular na thread principal</button>
+        <button id="fibonacciWorkerThread"> Calcular na thread paralela</button>
         <p></p>
-        <button id="loopMainThread"> Start a loop in the main thread</button>
-        <button id="loopMainBackEnd"> Start a loop in the "back-end" (web worker)</button>
-         <p></p>
-        <button id="addCatTable"> Add a table with cats</button>
-        <div id="catTableContainer"></div>
+        <button id="createGrid"> Criar Grid</button>
+        <p></p>
+        <div id="gridContainer"></div>
     </body>
+
+    <script src="../application/frontDefault.js"></script>
 </html>
