@@ -2,8 +2,7 @@ What Is This?
 -------------
 (Work in progress)
 
-This is a javascript library that seeks to help developers in the creation of full client-side applications.
-Which means web applications that runs entirely in the browser.
+This is a proof of concept of the javascript library chimera-js(https://github.com/whortaneto/chimera-js)
 
 
 How To Install the development environment?
