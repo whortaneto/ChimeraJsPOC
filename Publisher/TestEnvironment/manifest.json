@@ -1,5 +1,0 @@
-{
-    "model" : [],
-    "views" : ["../application/front.js", "../application/front2.js"],
-    "controllers" : ["back.js", "backDois.js"]
-}
