@@ -1,6 +1,17 @@
 import React, { Component } from 'react';
+import List from './components/presentational/list';
 import logo from './logo.svg';
 import './App.css';
+
+const styles = {
+  addContainer: {
+    marginTop: '25px',
+    marginBottom: '25px',
+    addButton: {
+      marginLeft: '5px'
+    }
+  }
+}
 
 class App extends Component {
   render() {
@@ -10,9 +21,17 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h2>Welcome to React</h2>
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <div style={styles.addContainer}>
+          <input type="text"/>
+          <button style={styles.addContainer.addButton} type="button">add</button>
+        </div>
+        <List>
+          <p> Olha Carol </p>
+          <p> Olha Carol </p>
+          <p> Olha Carol </p>
+          <p> Olha Carol </p>
+          <p> Olha Carol </p>
+        </List>
       </div>
     );
   }
