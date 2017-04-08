@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import GifRow from './components/presentational/gifRow';
 import List from './components/presentational/list';
 import logo from './logo.svg';
 import './App.css';
@@ -26,11 +27,14 @@ class App extends Component {
           <button style={styles.addContainer.addButton} type="button">add</button>
         </div>
         <List>
-          <p> Olha Carol </p>
-          <p> Olha Carol </p>
-          <p> Olha Carol </p>
-          <p> Olha Carol </p>
-          <p> Olha Carol </p>
+          <GifRow
+            imageUrl="https://media.giphy.com/media/Dsr9bhYs0PXry/giphy.gif"
+            editButtonLabel="Edit" deleteButtonLabel="Delete"
+          />
+          <GifRow
+            imageUrl="https://img.memesuper.com/39698b2c967e1df63d48df070321651d_-tambm-um-travesti-e-uma-meme-jogando-a-mesa-pra-cima_339-223.gif"
+            editButtonLabel="Editar" deleteButtonLabel="Deletar"
+          />
         </List>
       </div>
     );
