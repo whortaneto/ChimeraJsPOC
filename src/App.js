@@ -15,6 +15,27 @@ const styles = {
 }
 
 class App extends Component {
+
+  constructor() {
+    super();
+    this.state = {
+      gifsUrls: [
+        "https://media.giphy.com/media/Dsr9bhYs0PXry/giphy.gif",
+        "https://img.memesuper.com/39698b2c967e1df63d48df070321651d_-tambm-um-travesti-e-uma-meme-jogando-a-mesa-pra-cima_339-223.gif",
+        "https://tctechcrunch2011.files.wordpress.com/2015/08/safe_image.gif?w=705"
+      ]
+    };
+  }
+
+  buildRows() {
+    return this.state.gifsUrls.map(item => (
+      <GifRow
+        imageUrl={item}
+        editButtonLabel="Edit" deleteButtonLabel="Delete"
+      />
+    ));
+  }
+
   render() {
     return (
       <div className="App">
@@ -27,14 +48,7 @@ class App extends Component {
           <button style={styles.addContainer.addButton} type="button">add</button>
         </div>
         <List>
-          <GifRow
-            imageUrl="https://media.giphy.com/media/Dsr9bhYs0PXry/giphy.gif"
-            editButtonLabel="Edit" deleteButtonLabel="Delete"
-          />
-          <GifRow
-            imageUrl="https://img.memesuper.com/39698b2c967e1df63d48df070321651d_-tambm-um-travesti-e-uma-meme-jogando-a-mesa-pra-cima_339-223.gif"
-            editButtonLabel="Editar" deleteButtonLabel="Deletar"
-          />
+          {this.buildRows()}
         </List>
       </div>
     );
