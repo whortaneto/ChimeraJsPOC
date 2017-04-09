@@ -19,26 +19,70 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      gifsUrls: []
+      gifsUrls: [],
+      editedRow: undefined
     };
     this.addGifRow = this.addGifRow.bind(this);
+    this.deleteGifRow = this.deleteGifRow.bind(this);
+    this.editGifRow = this.editGifRow.bind(this);
+    this.saveEditRow = this.saveEditRow.bind(this);
+    this.editInputRef = this.editInputRef.bind(this);
   }
 
   buildRows() {
     return this.state.gifsUrls.map(item => (
       <GifRow
-        imageUrl={item}
+        key={item.id}
+        imageUrl={item.url}
+        isEditing={this.state.editedRow === item.id}
         editButtonLabel="Edit" deleteButtonLabel="Delete"
+        saveButtonLabel="Save"
+        editInputRef={this.editInputRef}
+        deleteButtonOnClick={() => { this.deleteGifRow(item.id)}} 
+        editButtonOnClick={() => { this.editGifRow(item.id)}}
+        saveButtonOnClick={() => { this.saveEditRow(item.id)}}
       />
     ));
   }
 
   addGifRow() {
     if (this.urlInput.value) {
-      this.state.gifsUrls.push(this.urlInput.value);
+      const gifObject = {
+        url: this.urlInput.value,
+        id: this.state.gifsUrls.length++
+      };
+      this.state.gifsUrls.push(gifObject);
       this.urlInput.value = '';
       this.setState(this.state);
     }
+  }
+
+  saveEditRow(id) {
+    if (this.editInput.value) {
+      this.state.gifsUrls = this.state.gifsUrls.map(item => {
+        if (item.id === id) {
+          item.url = this.editInput.value;
+        } 
+        return item;
+      });
+      this.editInput.value = '';     
+    }
+    this.state.editedRow = undefined;
+    this.setState(this.state); 
+  }
+
+  deleteGifRow(id) {
+    this.state.gifsUrls = this.state.gifsUrls.filter(item => item.id !== id);
+    this.setState(this.state);
+  }
+
+  editGifRow(id) {
+    this.state.editedRow = 0;
+    this.setState(this.state);
+  }
+
+  editInputRef(input) {
+    this.editInput = input;
   }
 
 

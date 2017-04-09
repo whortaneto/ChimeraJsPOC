@@ -19,13 +19,33 @@ const styles = {
 
 class GifRow extends Component {
   render() {
-    const { imageUrl, editButtonLabel, deleteButtonLabel } = this.props;
+    const {
+      imageUrl,
+      isEditing,
+      editButtonLabel,
+      deleteButtonLabel,
+      saveButtonLabel,
+      deleteButtonOnClick,
+      editButtonOnClick,
+      saveButtonOnClick,
+      editInputRef
+    } = this.props;
     return (
       <div style={styles.container}>
-        <img src={imageUrl} height="300" width="300"/>
+        {
+          isEditing ? 
+          <input type="text" ref={editInputRef} />
+          :
+          <img src={imageUrl} height="300" width="300"/>
+        }
         <div style={styles.container.buttonsContainer}>
-          <button type="button">{editButtonLabel}</button>
-          <button type="button">{deleteButtonLabel}</button>
+        {
+          isEditing ? 
+          <button type="button" onClick={saveButtonOnClick}>{saveButtonLabel}</button>
+          :
+          <button type="button" onClick={editButtonOnClick}>{editButtonLabel}</button>
+        }
+          <button type="button" onClick={deleteButtonOnClick}>{deleteButtonLabel}</button>
         </div>
       </div>
     );
