@@ -77,7 +77,7 @@ class App extends Component {
   }
 
   editGifRow(id) {
-    this.state.editedRow = 0;
+    this.state.editedRow = id;
     this.setState(this.state);
   }
 
