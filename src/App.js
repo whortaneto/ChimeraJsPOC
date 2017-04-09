@@ -19,12 +19,9 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      gifsUrls: [
-        "https://media.giphy.com/media/Dsr9bhYs0PXry/giphy.gif",
-        "https://img.memesuper.com/39698b2c967e1df63d48df070321651d_-tambm-um-travesti-e-uma-meme-jogando-a-mesa-pra-cima_339-223.gif",
-        "https://tctechcrunch2011.files.wordpress.com/2015/08/safe_image.gif?w=705"
-      ]
+      gifsUrls: []
     };
+    this.addGifRow = this.addGifRow.bind(this);
   }
 
   buildRows() {
@@ -36,16 +33,25 @@ class App extends Component {
     ));
   }
 
+  addGifRow() {
+    if (this.urlInput.value) {
+      this.state.gifsUrls.push(this.urlInput.value);
+      this.urlInput.value = '';
+      this.setState(this.state);
+    }
+  }
+
+
   render() {
     return (
       <div className="App">
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+          <h2>Gif List</h2>
         </div>
         <div style={styles.addContainer}>
-          <input type="text"/>
-          <button style={styles.addContainer.addButton} type="button">add</button>
+          <input type="text" ref={(input) => {this.urlInput = input}} />
+          <button style={styles.addContainer.addButton} type="button" onClick={this.addGifRow}>add</button>
         </div>
         <List>
           {this.buildRows()}
